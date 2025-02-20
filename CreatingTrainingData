@@ -49,6 +49,9 @@ function CreateTrainingDataFromEXRData()
     mkdir("TrainingData2")
     for sub_id=subject_id_list
         subject_id = sub_id;
+%I think I found your problem when looking at the filters you have placed...the problem with having a varibility in images/noise and each movement of the head is different ...the filters may be too simple
+%when identifying the complex variables you're setting %what if we gather even more data... and create a deep learning system that is better an analyzing images. This would make it easier for the model to have more to compare to %may be better for you thousands of images% 
+
         velocityTable = {'ImageName', 'dx', 'dy', 'dz', 'rx', 'ry', 'rz'};%collective data of head movement...this is my y data
         mkdir(strcat('D://TrainingData/', subject_id));
         mkdir(strcat('D://TrainingLabels/', subject_id))

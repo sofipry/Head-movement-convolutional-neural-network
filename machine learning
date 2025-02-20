@@ -127,7 +127,7 @@ class EnergyBasedResNet3D(nn.Module):
         return energy, features
 
 
-
+%the CNN has 5 convolutional- that you were talking about %layer 7 is the pooling layer%And layer 6 was commented out to make simpler?
 class ResNet3D(nn.Module):
     def __init__(self, num_classes=9, num_frames=20, kernel_size=(5, 3, 3), dropout_prob=0.05):
         super(ResNet3D, self).__init__()
@@ -528,6 +528,10 @@ if __name__ == '__main__':
     #energy_model = EnergyBasedResNet3D(base_model, feature_dim=1024, num_outputs=num_outputs).to(device)
     energy_model.apply(initialize_weights)
     # Optimizer and scheduler
+
+
+   #why'd you decide to use SGD for your optimizer function
+
     optimizer = torch.optim.SGD(energy_model.parameters(), momentum=0.9, lr=1e-4, weight_decay=1e-4)
     #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', patience=2, factor=0.5)
     #scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.9)

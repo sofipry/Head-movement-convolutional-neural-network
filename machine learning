@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from torch.optim.lr_scheduler import SequentialLR, LambdaLR, CosineAnnealingLR
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
 
+#used to grab new stack of images
 class StackedFramesDataset(Dataset):
     def __init__(self, root_dir, transform=None, frames_per_stack=20):
         self.root_dir = root_dir

@@ -1,3 +1,4 @@
+%this file converts the images to be readable in the machine learning model
 function CreateTrainingDataFromEXRData()
     clear all;
     close all;

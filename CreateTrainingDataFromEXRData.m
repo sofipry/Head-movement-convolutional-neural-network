@@ -42,7 +42,7 @@ function CreateTrainingDataFromEXRData()
     
     
 
-    subject_id_list = ["nvp","nvp7","nvp8", "nvp10", "nvp9", "yjo2"];%, "nvp4", "nvp3", "nvp2", "nvp"];
+    subject_id_list = "nvp";%, "nvp4", "nvp3", "nvp2", "nvp"];
 
     num = 1;
     %mkdir("TrainingLabels")
@@ -50,8 +50,8 @@ function CreateTrainingDataFromEXRData()
     for sub_id=subject_id_list
         subject_id = sub_id;
         velocityTable = {'ImageName', 'dx', 'dy', 'dz', 'rx', 'ry', 'rz'};
-        mkdir(strcat('D://TrainingData/', subject_id));
-        mkdir(strcat('D://TrainingLabels/', subject_id))
+        mkdir(strcat('D://TrainingData/nvp', subject_id));
+        mkdir(strcat('D://TrainingLabels/nvp', subject_id))
         if runCurl
     
             dataPath = strcat('vrWalkingdata/frameRecording/', sub_id, '/');
@@ -75,8 +75,31 @@ function CreateTrainingDataFromEXRData()
             emptyData = {'Trial', 'Environment', 'Condition', 'EnvironmentCondition',  'Divergence', 'CenterDiv'};
     
         end
-        
-        frameNumberTrial = 1;
+% Ensure the 'TrainingResnet' directory exists before writing
+if ~exist('TrainingResnet', 'dir')
+    mkdir('TrainingResnet');
+end
+
+for sub_id = subject_id_list
+    subject_id = sub_id;
+    velocityTable = {'ImageName', 'dx', 'dy', 'dz', 'rx', 'ry', 'rz'};
+    
+    subjectDir = strcat('TrainingResnet/', subject_id);
+    if ~exist(subjectDir, 'dir')
+        mkdir(subjectDir);
+    end
+    
+    % Ensure subjectName is properly assigned
+    subjectName = sub_id; 
+
+    % Initialize dataTable
+    dataTable = cell2table(cellstr(velocityTable), 'VariableNames', velocityTable);
+
+    % ... rest of your code ...
+    
+    writetable(dataTable, strcat(subjectDir, '/labels.csv'));
+end       
+frameNumberTrial = 1;
 
         previousSubjectName = 'Null';
         previousTrial = 'NaN';
@@ -336,7 +359,9 @@ function CreateTrainingDataFromEXRData()
                     writetable(dataTable, strcat('ResnetTraining3/', subject_id, '/', currTrialString, '/','labels.csv'))
                 end
 
-                
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
             %     [ii, a] = exrread(currImageName);
             %     rg = squeeze(ii(:,:,1:2));

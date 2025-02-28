@@ -37,12 +37,10 @@ function CreateTrainingDataFromEXRData()
     horizontalDegPerPixel = ofWidth/horizontalFOV;
     verticalDegPerPixel = ofHeight/verticalFOV;
 
-    verticalWindowFOV = verticalDegPerPixel*centerSize*2;
-    horizontalWindowFOV = horizontalDegPerPixel*centerSize*2;
-
-
+    verticalWindowFOV = verticalDegPerPixel*centerSize*2
+    horizontalWindowFOV = horizontalDegPerPixel*centerSize*2
     
-    %I think this is all my file path stuff
+    
 
     subject_id_list = ["nvp","nvp7","nvp8", "nvp10", "nvp9", "yjo2"];%, "nvp4", "nvp3", "nvp2", "nvp"];
 
@@ -51,51 +49,32 @@ function CreateTrainingDataFromEXRData()
     mkdir("TrainingData2")
     for sub_id=subject_id_list
         subject_id = sub_id;
-        %my y_values..outputs
         velocityTable = {'ImageName', 'dx', 'dy', 'dz', 'rx', 'ry', 'rz'};
         mkdir(strcat('D://TrainingData/', subject_id));
         mkdir(strcat('D://TrainingLabels/', subject_id))
-        %if runCurl
-        
-        % Define folder paths
-        folderPath1 = 'C:\Users\URMOM\Downloads\MATLAB\nvp9\D';
-        fileName1 = '/'; % Assuming this is a file, replace with actual name
-
-        folderPath2 = 'C:\Users\URMOM\Downloads\MATLAB\VRWalkingRaw\nvp9\stuff';
-        fileName2 = 'data.csv';
-
-        folderPath3 = 'C:\Users\URMOM\Downloads\MATLAB\fixationRecording\nvp9';
-        fileName3 = 'gazeframedata.csv';
-
-% Construct full file paths correctly
-        dataPath = fullfile(folderPath1, fileName1);
-        allRawDataPath = fullfile(folderPath2, fileName2);
-        fixationData = fullfile(folderPath3, fileName3);
-        
-
-        
-
-       
-        %allRawDataPath = strcat('VRWalkingdata/nvp9/',sub_id,'/data.csv');
-        %fixationData = strcat('fixationRecording/nvp9',sub_id,'/gazeframedata.csv');
-
-        %fixData = readtable(fixationData);
-        
-        image = dir(fullfile(dataPath, "*.png"));
+        if runCurl
     
-        emptyData = {'Subject', 'Trial', 'Environment', 'Condition', 'EnvironmentCondition',  'Curl', 'CenterCurl', 'BigCenterCurl', 'Divergence', 'CenterDivergence', 'BigCenterDiv', 'Frame', 'FrameProp', 'Fixation', 'Ground', 'LowerCurl', 'UpperCurl', 'FrameNumber'};
+            dataPath = strcat('vrWalkingdata/frameRecording/', sub_id, '/');
+            allRawDataPath = strcat('vrWalkingdata/VRWalkingRaw/',sub_id,'/data.csv');
+            fixationData = strcat('vrWalkingdata/fixationRecording/',sub_id,'/gazeframedata.csv');
+
+            %fixData = readtable(fixationData);
+        
+            image = dir(fullfile(dataPath, "*.png"));
+    
+            emptyData = {'Subject', 'Trial', 'Environment', 'Condition', 'EnvironmentCondition',  'Curl', 'CenterCurl', 'BigCenterCurl', 'Divergence', 'CenterDivergence', 'BigCenterDiv', 'Frame', 'FrameProp', 'Fixation', 'Ground', 'LowerCurl', 'UpperCurl', 'FrameNumber'};
     
     
-        %else
+        else
         
         
-            %dataPath = '/Volumes/Seagate Portable Drive/testOutput/Divergence/';
+            dataPath = '/Volumes/Seagate Portable Drive/testOutput/Divergence/';
         
-            %image = dir(fullfile(dataPath, "*.png"));
+            image = dir(fullfile(dataPath, "*.png"));
     
-            %emptyData = {'Trial', 'Environment', 'Condition', 'EnvironmentCondition',  'Divergence', 'CenterDiv'};
+            emptyData = {'Trial', 'Environment', 'Condition', 'EnvironmentCondition',  'Divergence', 'CenterDiv'};
     
-        %end
+        end
         
         frameNumberTrial = 1;
 
@@ -128,7 +107,7 @@ function CreateTrainingDataFromEXRData()
             currTrial = currImageNameSplit(2);
             splitTrialNum = split(currTrial, 'l');
             currTrialNumber = splitTrialNum(2);
-            currTrialString = currTrialNumber;
+            currTrialString = currTrialNumber
 
             if mod(str2double(currTrialNumber)+1, 2)==0
                 modifier = 1;
@@ -513,7 +492,7 @@ function CreateTrainingDataFromEXRData()
     
             else
     
-                'Not fixation. Skipping.';
+                'Not fixation. Skipping.'
     
             end
     
@@ -534,6 +513,8 @@ function CreateTrainingDataFromEXRData()
         %    writetable(dataTable, strcat(subject_id, 'allavgdivergencedata.csv'))
         %end
         dataTable = cell2table(cellstr(velocityTable(2:end,:)), 'VariableNames',velocityTable(1,:));
+
+
         writetable(dataTable, strcat('TrainingResnet/',subjectName,'labels.csv'))
     end
 
@@ -867,8 +848,8 @@ function groundBool = findTrialMaxGazeDistance(currFrame, currTrial, currRawData
 
     if currFrame > size(currRawData,1)
         currFrame = size(currRawData,1);
-        currTrial;
-        %'Why this wrong....'
+        currTrial
+        'Why this wrong....'
     end
 
     
